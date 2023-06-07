@@ -71,7 +71,8 @@ class Comparator():
 
 
 @timefn             
-@st.cache(allow_output_mutation= True)
+# @st.cache_data(allow_output_mutation= True)
+@st.cache_data
 def run_phonetic_encoding(df_a,select_encoding):
     """ Calulate the phonetic encoding of the selected fields """
     
@@ -92,7 +93,7 @@ def run_phonetic_encoding(df_a,select_encoding):
 
 
 @timefn
-@st.cache
+@st.cache_data
 def run_blocking(df_a, blocks,blocking ="Standard"):
     """ Run the blocking/indexing based on the blocking parameter """
     
@@ -147,7 +148,7 @@ def  exact_matching_classifier(candidate_pairs):
     return candidate_pairs
 
 
-@st.cache
+@st.cache_resource
 def em_classifier(features):
     ecm  = rl.ECMClassifier(binarize=0.85)
     matches  = ecm.fit_predict(features)
@@ -157,7 +158,7 @@ def em_classifier(features):
     return matches,df_ecm_prob
 
 
-@st.cache
+@st.cache_resource
 def kmeans_classifier(features):
     """ Kmeans classifier """
     kmeans = rl.KMeansClassifier()
@@ -167,7 +168,7 @@ def kmeans_classifier(features):
 
 ##FIXME Fix ML classifiers to accept train/test split
 
-@st.cache
+@st.cache_resource
 def logreg_classifier(features,links_true,train_size = 0.2,cv=None):
     """ Logistic Regression classifier function"""
     logreg = rl.LogisticRegressionClassifier()
@@ -191,7 +192,7 @@ def logreg_classifier(features,links_true,train_size = 0.2,cv=None):
     return matches, df_logreg_prob
 
 
-@st.cache
+@st.cache_resource
 def nb_classifier(features,links_true,train_size = 0.2,cv=None):
     """ Naive Bayes Classifier """    
 
@@ -219,7 +220,7 @@ def nb_classifier(features,links_true,train_size = 0.2,cv=None):
     return matches, df_nb
 
 
-@st.cache
+@st.cache_resource
 def svm_classifier(features,links_true,train_size = 0.2,cv=None):
     """  Support vector machine classifier """
     svm = rl.SVMClassifier()
@@ -244,7 +245,7 @@ def svm_classifier(features,links_true,train_size = 0.2,cv=None):
     return matches, df_svm
 
 
-@st.cache
+@st.cache_resource
 def weighted_average_classifier(threshold,comparison_vectors,weight_factor):
     """  Weighted average matching  """
     
@@ -266,7 +267,7 @@ def weighted_average_classifier(threshold,comparison_vectors,weight_factor):
     return matches.index , matches['score']         
  
  
-@st.cache
+@st.cache_resource
 def cross_val_predict(classifier,comparison_vector,link_true,cv = 5 , method ='predict'):
         skfolds = StratifiedKFold(n_splits = cv)
         

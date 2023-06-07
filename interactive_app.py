@@ -24,7 +24,9 @@ _non_supervised_classifiers =  ['SimSum','Weighted Average','ECM']
        
 
 @timefn
-@st.cache(allow_output_mutation=True)
+# # @st.cache(allow_output_mutation=True)
+# @st.cache_data
+@st.cache_data
 def load_data(file_name):
     logging.info("loading data ....")      
     
@@ -36,7 +38,8 @@ def load_data(file_name):
         return
  
     
-@st.cache(allow_output_mutation=True)
+# @st.cache(allow_output_mutation=True)
+@st.cache_data
 def load_data_gold_standard(filename,is_gold_standard):
     
     if is_gold_standard :
@@ -49,7 +52,8 @@ def load_data_gold_standard(filename,is_gold_standard):
 
 
 @timefn
-@st.cache(allow_output_mutation=True)
+# @st.cache(allow_output_mutation=True)
+@st.cache_data
 def set_data_index(df_a,index_field):
     
     logging.info("setting index....")      
